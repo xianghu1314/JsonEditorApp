@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Json格式化工具</title>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!--<link href="jsoneditor/dist/jsoneditor.min.css" rel="stylesheet" type="text/css">-->
+    <!--<script src="jsoneditor/dist/jsoneditor.min.js"></script>-->
+    <link rel="stylesheet" href="../node_modules/jsoneditor/dist/jsoneditor.min.css">
+    <script src="../node_modules/jsoneditor/dist/jsoneditor.min.js"></script>
+</head>
+<body>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+
+    }
+
+    .jsoneditor-transform {
+        display: none;
+    }
+
+    /*.jsoneditor-poweredBy{*/
+    /*display: none;*/
+    /*}*/
+</style>
+<div id="jsoneditor" style="width: 100%; height: 100%;"></div>
+
+<script>
+    // create the editor
+    const container = document.getElementById("jsoneditor")
+    const options = {
+        mode: 'code',
+        // modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+        // onError: function (err) {
+        //     alert(err.toString())
+        // },
+        // onModeChange: function (newMode, oldMode) {
+        //     console.log('Mode switched from', oldMode, 'to', newMode)
+        // }
+    }
+    const editor = new JSONEditor(container, options)
+
+    // set json
+    const initialJson = {
+        "describe": "Hello World"
+    }
+    editor.set(initialJson)
+
+    //modify the href
+    var poweredBy = document.querySelector(".jsoneditor-poweredBy");
+    poweredBy.innerText = "xianghu";
+    poweredBy.href = "http://www.baidu.com"
+
+    var menu = document.querySelector(".jsoneditor-menu");
+    let button = document.createElement('button');
+    button.innerText = "复制";
+    button.style="width:40px;background: none;"
+    button.title = "copy the json str"
+    button.onclick = function () {
+        // get json
+        try {
+            const updatedJson = editor.get()
+            const clipboard = require('electron').clipboard
+            clipboard.writeText(JSON.stringify(updatedJson))
+            Toast("复制成功")
+        }catch (e) {
+            Toast("无内容")
+            return
+        }
+
+    }
+    menu.appendChild(button)
+
+    function Toast(msg,duration){
+        duration=isNaN(duration)?3000:duration;
+        var m = document.createElement('div');
+        m.innerHTML = msg;
+        m.style.cssText="max-width:60%;min-width: 150px;padding:0 14px;height: 40px;color: rgb(255, 255, 255);line-height: 40px;text-align: center;border-radius: 4px;position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);z-index: 999999;background: rgba(0, 0, 0,.7);font-size: 16px;";
+        document.body.appendChild(m);
+        setTimeout(function() {
+            var d = 0.5;
+            m.style.webkitTransition = '-webkit-transform ' + d + 's ease-in, opacity ' + d + 's ease-in';
+            m.style.opacity = '0';
+            setTimeout(function() { document.body.removeChild(m) }, d * 1000);
+        }, duration);
+    }
+</script>
+</body>
+</html>
