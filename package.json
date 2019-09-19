@@ -1,20 +1,37 @@
 {
-  "name": "myelectron",
+  "name": "json-editor",
   "version": "1.0.0",
   "description": "Json格式化",
   "main": "main.js",
+  "build": {
+    "appId": "com.json-editor.app",
+    "mac": {
+      "icon": "images/icon.png",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "icon": "images/icon.png",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    }
+  },
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager . 'Hosts' --platform=darwin --arch=x64 --icon=Icon.icns --out=./dist --asar --app-version=1.0.0"
+    "dist-win": "electron-builder --win --x64",
+    "dist-darwin": "electron-builder --mac --x64"
   },
   "author": "xianghu",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^5.0.6",
-    "electron-packager": "^14.0.0"
+    "electron": "^5.0.10",
+    "electron-builder": "^21.2.0"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "jsoneditor": "^7.0.4",
     "moment": "^2.24.0"
   }
