@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/json-editor.iml" filepath="$PROJECT_DIR$/.idea/json-editor.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/myElectron.iml" filepath="$PROJECT_DIR$/.idea/myElectron.iml" />
     </modules>
   </component>

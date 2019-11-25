@@ -63,9 +63,11 @@
     button.onclick = function () {
         // get json
         try {
-            const updatedJson = editor.get()
+            let content=document.querySelector('.ace_text-layer');
+            // const updatedJson = editor.getText()
+            const updatedJson = content.innerText;
             const clipboard = require('electron').clipboard
-            clipboard.writeText(JSON.stringify(updatedJson))
+            clipboard.writeText(updatedJson)
             Toast("复制成功")
         }catch (e) {
             Toast("无内容")
@@ -74,6 +76,40 @@
 
     }
     menu.appendChild(button)
+
+    let buttonZY = document.createElement('button');
+    buttonZY.innerText = "转义";
+    buttonZY.style="width:40px;background: none;"
+    buttonZY.title = "copy the json str"
+    buttonZY.onclick = function () {
+        debugger
+        // get json
+        let content=document.querySelector('.ace_text-layer');
+        const updatedJson = content.innerText;
+        if (updatedJson.indexOf('\\"')>-1){
+            var ace_variables=content.querySelectorAll(".ace_variable");
+            ace_variables&&ace_variables.forEach((item)=>{
+                item.innerText=item.innerText.replace(/\\/g,'');
+            })
+            var ace_variables=content.querySelectorAll(".ace_string");
+            ace_variables&&ace_variables.forEach((item)=>{
+                item.innerText=item.innerText.replace(/\\/g,'');
+            })
+        } else{
+            var ace_variables=content.querySelectorAll(".ace_variable");
+            ace_variables&&ace_variables.forEach((item)=>{
+                item.innerText=item.innerText.replace(/"/g,'\\"');
+            })
+            var ace_variables=content.querySelectorAll(".ace_string");
+            ace_variables&&ace_variables.forEach((item)=>{
+                item.innerText=item.innerText.replace(/"/g,'\\"');
+            })
+        }
+
+
+
+    }
+    menu.appendChild(buttonZY)
 
     function Toast(msg,duration){
         duration=isNaN(duration)?3000:duration;
