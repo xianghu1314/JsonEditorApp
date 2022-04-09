@@ -33,6 +33,6 @@
   },
   "dependencies": {
     "jsoneditor": "^7.0.4",
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   }
 }
